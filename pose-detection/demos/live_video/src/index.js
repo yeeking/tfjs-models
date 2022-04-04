@@ -1,4 +1,8 @@
 /**
+* hacked version of pose estimator which sends pose data as json 
+* string over to a websocket server 
+*/
+/**
  * @license
  * Copyright 2021 Google LLC. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,6 +40,8 @@ let detector, camera, stats;
 let startInferenceTime, numInferences = 0;
 let inferenceTimeSum = 0, lastPanelUpdate = 0;
 let rafId;
+
+var webSocket = new WebSocket("ws://localhost:8080");
 
 async function createDetector() {
   switch (STATE.model) {
@@ -111,6 +117,7 @@ async function checkGuiUpdate() {
     STATE.isBackendChanged = false;
     STATE.isModelChanged = false;
   }
+  //console.log(detector);
 }
 
 function beginEstimatePosesStats() {
@@ -156,6 +163,20 @@ async function renderResult() {
       poses = await detector.estimatePoses(
           camera.video,
           {maxPoses: STATE.modelConfig.maxPoses, flipHorizontal: false});
+      //console.log(poses);
+      // MYK send the pose over the websocket
+      //webSocket.send("Here's some text that the server is urgently awaiting!");      //console.log(poses[0].keypoints[0].x);
+      //console.log(webSocket.readyState);
+      if (webSocket.readyState == 1) // ready to go
+      {
+        webSocket.send(JSON.stringify(poses));
+      }
+      else
+      {
+        console.log("websocket server not ready - start it and reload page! ");
+        //webSocket = new WebSocket("ws://localhost:8080");
+      }
+      
     } catch (error) {
       detector.dispose();
       detector = null;
