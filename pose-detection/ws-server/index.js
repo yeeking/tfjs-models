@@ -2,9 +2,13 @@
 // JSON string and decodes it
  
 const WebSocket = require('ws')
+
+const PORT = 8080
  
-const wss = new WebSocket.Server({ port: 8080 })
+const wss = new WebSocket.Server({ port: PORT })
  
+console.log("Listening on port ", PORT);
+
 wss.on('connection', ws => {
   ws.on('message', message => {
     try{
