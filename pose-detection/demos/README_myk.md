@@ -1,4 +1,4 @@
-Instructions to set up post to WS:
+Instructions to set up 'pose to websocket' system.
 
 ## Install node.js:
 
@@ -10,7 +10,7 @@ git clone git@github.com:yeeking/tfjs-models.git
 
 ## Start the websocket server:
 
-cd tfjs-models/pose-detection/ws-server
+cd tfjs-models/pose-detection/demos/ws-server
 
 npm install
 
