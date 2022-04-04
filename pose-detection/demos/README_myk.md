@@ -10,7 +10,7 @@ git clone git@github.com:yeeking/tfjs-models.git
 
 ## Start the websocket server:
 
-cd tfjs-models/pose-detection/demos/ws-server
+cd tfjs-models/pose-detection/demos/basic-ws-server
 
 npm install
 
@@ -32,6 +32,28 @@ something like:
 ## Watch the websocket server receive data
 
 You should get a load of data flowing past on the websocket server. 
+
+## Send OSC to SuperCollider:
+
+```
+cd tfjs-models/pose-detection/demos/pose-to-osc
+
+npm install
+
+node index.js
+```
+
+At the moment, it only sends the nose position
+
+In SuperCollider, you can receive the nose:
+
+```
+OSCdef(\nose, {
+	|msg, time, addr, recvPort| 
+	msg.postln;
+}, '/nose'); // def style
+
+```
 
 
 
